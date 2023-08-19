@@ -1,115 +1,192 @@
-import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import Link from 'next/link';
+import React, {useState, useEffect, useRef} from 'react';
+import Image from 'next/image';
+import {Grid, Button, Card, CardContent, CardMedia, Paper, Avatar, Typography, Slide, Fade, Box, Tooltip} from '@mui/material';
+import { createURL, grabImage } from '../components/sanityClient';
+import SEO from '../components/seo';
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+function useWindowSize() {
+    // Initialize state with undefined width/height so server and client renders match
+    // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
+    const [windowSize, setWindowSize] = useState({
+      width: undefined,
+      height: undefined,
+    });
+  
+    useEffect(() => {
+      // only execute all the code below in client side
+      // Handler to call on window resize
+      function handleResize() {
+        // Set window width/height to state
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }
+      
+      // Add event listener
+      window.addEventListener("resize", handleResize);
+       
+      // Call handler right away so state gets updated with initial window size
+      handleResize();
+      
+      // Remove event listener on cleanup
+      return () => window.removeEventListener("resize", handleResize);
+    }, []); // Empty array ensures that effect is only run on mount
+    return windowSize;
+  }
 
-      <main>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
-        </a>
-      </footer>
-
-      <style jsx>{`
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        footer img {
-          margin-left: 0.5rem;
-        }
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-          color: inherit;
-        }
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
-  )
+export async function getStaticProps() {
+  const avatar = await fetch(createURL("avatar"));
+  const homepage = await fetch(createURL("homepage"));
+  const about = await fetch(createURL("about"));
+  const contactPage = await fetch(createURL("contactPage"));
+  const contacts = await fetch(createURL("contact"));
+  return {
+    props: {
+      avatar: await avatar.json(), homepage: await homepage.json(), about: await about.json(),
+      contactPage: await contactPage.json(), contacts: await contacts.json()
+    },
+  };
 }
+
+const useIntersection = (element, rootMargin) => {
+  const [isVisible, setState] = useState(false);
+
+  useEffect(() => {
+      const observer = new IntersectionObserver(
+          ([entry]) => {
+              setState(entry.isIntersecting);
+          }, { rootMargin }
+      );
+
+      element.current && observer.observe(element.current);
+
+  }, []);
+
+  return isVisible;
+};
+
+const Homepage = ({avatar, homepage, contactPage, contacts, about}) =>{
+  const aboutRef = useRef(null)
+  const contactRef = useRef(null);
+  const inViewport = useIntersection(contactRef, '0px');
+  const executeScroll = () => aboutRef.current.scrollIntoView()    
+  const avatarInfo = {
+      name: avatar.result[0].name,
+      title: avatar.result[0].title,
+      image: grabImage(avatar.result[0].picture.asset)
+  }
+  const homepageInfo = {
+      image: grabImage(homepage.result[0].picture.asset)
+  }
+  const window = useWindowSize();
+  const info = contactPage.result[0];
+  const aboutInfo = about.result[0];
+  const aboutLines = aboutInfo.description.split('\n');
+  const aboutImage = grabImage(aboutInfo.picture.asset);
+
+  return (
+    <>
+      <div style={{ backgroundImage: `url(${homepageInfo.image})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '91.5vh' }}>
+      <SEO pageTitle="Jerry Worthy - Software Engineer and Electrical/Computer Engineer" 
+      pageDescription="Welcome to my portfolio website! I'm Jerry Worthy, a passionate software engineer and electrical/computer engineer. Explore my profile, projects, and ways to connect with me via email, LinkedIn, and Handshake."
+      />
+        <Fade in  timeout={1000}>
+              <Button onClick={executeScroll} component = {Card}  raised sx = {{ position: "absolute", diplay: "flex", top: "25%", left: "20%", backgroundColor: '#d1700fc0', borderRadius: "10px", padding: 2}}>
+                  <CardContent>
+                      <CardMedia style ={{display: "flex", justifyContent: "center"}}>
+                          <Avatar src = {avatarInfo.image} sx = {{width: 200, height: 200, border: "5px solid #f5f3f2"}}/>
+                      </CardMedia>
+                      <Typography variant='h6' color= "#f5f3f2" sx={{ fontFamily: 'monospace', textAlign: "center" }}>
+                          {avatarInfo.name}
+                      </Typography>
+                      <Typography component = {Paper} variant='subtitle1'  sx={{ fontFamily: 'monospace', textAlign: "center", backgroundColor: "#f5f3f2"  }}>
+                          {avatarInfo.title}
+                      </Typography>
+                  </CardContent>
+              </Button>
+        </Fade>
+      </div>
+      <div ref= {aboutRef} style={{ padding: '1rem'}}>
+        <Fade in timeout={750}>
+          <Card sx={{ display: 'flex', margin: '1rem', backgroundColor: '#F5F5DC' }}>
+              <Grid container>
+                  <Grid item xs = {12} sm ={6}>
+                      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                          <CardContent sx={{ flex: '1 0 auto' }}>
+                              <Typography component="div" variant="h1" className="header-text">
+                                  {aboutInfo.title}
+                              </Typography>
+                              <Typography variant="subtitle1" color="text.primary" component="div">
+                                  {aboutLines.map((line, id) => {
+                                      return (
+                                          <p key = {id} className='content-text'>
+                                              {line}
+                                          </p>   
+                                      )                            
+                                  })}
+                              </Typography>
+                          </CardContent>
+                      </Box>
+                  </Grid>
+                  <Grid item xs ={12} sm = {6} style={{display: 'flex', alignItems: 'center'}}>
+                      <CardMedia
+                          component="img"
+                          sx={{ width: "100%" }}
+                          image={aboutImage}
+                          alt="Beach pic"
+                      />
+                  </Grid>
+              </Grid>
+          </Card>
+        </Fade>
+      </div>
+      <div style={{backgroundColor: "#d1700fc0", marginTop: '2.5rem'}} ref= {contactRef} >
+        <Grid container sx = {{padding: '1rem'}} spacing = {5} justifyContent = 'center'>
+            <Grid item xs = {12} align='center'>
+                <h1 variant='h1' className = "header-text" style={{marginBottom: '-1rem', color: '#F5F5DC'}} >
+                    {info.title}
+                </h1>
+                <p ref= {contactRef} className='content-text' style={{color: '#F5F5DC'}}>
+                    {info.blurb}
+                </p>
+            </Grid>
+            {
+              contacts.result.map((contact, key) => {
+                return (
+                  <Slide in={inViewport} key={key} direction='right' timeout={1000}>
+                    <Grid key = {key} item xs = {12} sm = {4} md = {3}  align = 'center'>
+                      <div style = {{justifyContent: 'center', display: 'flex', background: 'transparent', borderRadius:"10px"}}>
+                          <CardContent>
+                              <CardMedia style = {{display: 'flex', justifyContent: 'center'}}>
+                                  <Avatar src={grabImage(contact.picture.asset)} sx={{ width: 140, height:140, backgroundColor: '#3072ff'}} align = 'center' />
+                              </CardMedia>
+                              <Typography color='#2e201f' variant='h6' sx={{ fontFamily: 'monospace', textAlign: 'center', color: '#F5F5DC' }}>
+                                  {contact.title}
+                              </Typography>
+                              <Typography color='#2e201f' variant = 'body1' sx={{ fontFamily: 'monospace', textAlign: 'center', color: '#F5F5DC' }}>
+                                  {
+                                    contact.copy == true?
+                                    <Tooltip title="Copy to Clipboard">
+                                    <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick = {() => {navigator.clipboard.writeText(contact.url)}}>{contact.text}</span>
+                                    </Tooltip>
+                                    :
+                                    <a href = {contact.url} >{contact.text}</a>
+                                  }
+                              </Typography>
+                          </CardContent>
+                        </div>
+                    </Grid>
+                  </Slide>
+                )
+              })
+            }
+
+          </Grid>
+      </div>
+    </>
+)
+}
+
+export default Homepage
