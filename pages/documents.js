@@ -20,13 +20,14 @@ const documents = ({documents}) => {
     <div>
       <SEO pageTitle= "Work Documents - Jerry Worthy's Portfolio" pageDescription= "Browse through a collection of documents showcasing my professional journey."/>
       <Fade in timeout={750}>
-        <Card sx={{ display: 'flex', margin: '1rem', backgroundColor: '#F5F5DC' }}>
+        <Card sx={{ display: 'flex', margin: '1rem', backgroundColor: '#F5F5DC', height: '100vh' }}>
             <Grid container>
-                <Grid item xs = {12} sm ={4}>
+                <Grid item xs = {12} md ={4}>
                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                         <CardContent sx={{ flex: '1 0 auto' }}>
                         <CardHeader 
                           title="Files"
+                          titleTypographyProps={{variant: 'h4'}}
                           subheader="Click on the items to display the files."
                           />
                           <List>
@@ -58,10 +59,10 @@ const documents = ({documents}) => {
                         </CardContent>
                     </Box>
                 </Grid>
-                <Grid item xs ={12} sm = {8} style={{display: 'flex', alignItems: 'center'}}>
+                <Grid item xs ={12} md = {8} style={{display: 'flex', alignItems: 'center'}}>
                     <CardMedia 
                     component="iframe"
-                    height="600vh"
+                    height="100%"
                     src={data}
                     />
                 </Grid>

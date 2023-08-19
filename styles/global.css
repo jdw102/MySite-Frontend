@@ -40,31 +40,15 @@ button {
 
 .header-text {
   font-family: 'Roboto', sans-serif;
-  font-size: 2rem;
+  font-size: 2vmax;
 }
 
 .content-text {
   font-family: 'Roboto', sans-serif;
-  font-size: 1.25rem;
+  font-size: 1.5vmax;
   white-space: pre-line;
   line-height: 150%;
-  margin-top: 40px
-}
-
-.search-container {
-  width: 60%
-}
-
-@media screen and (max-width: 500px) {
-  .search-container {
-    width: 80%
-  }
-}
-
-@media screen and (min-width: 1000px) {
-  .search-container {
-    width: 50%
-  }
+  margin-top: 1rem
 }
 
 .menu-button {

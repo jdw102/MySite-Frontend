@@ -41,14 +41,14 @@ const project = ({project}) => {
                             </IconButton>
                         </Tooltip>
                         </div>
-                        <CardHeader title={project.title} titleTypographyProps={{className: 'header-text'}}/>
+                        <CardHeader title={project.title} titleTypographyProps={{variant: 'h4', fontSize: '2vmax'}}/>
                     </div>
                     <Box sx={{ display: 'flex', flexDirection: 'column'}}>
                         <CardContent sx={{ display: 'flex', flex: '1 0 auto', alignItems: 'center'}}>
                             <Typography variant="subtitle1" color="text.primary" >
                                 {project.description.split('\n').map((line, key) => {
                                     return (
-                                        <p style={{marginBottom: '1rem'}} key={key}>
+                                        <p style={{marginBottom: '1rem', fontSize: '1.5vmax'}} key={key}>
                                            &nbsp; &nbsp; {line}
                                         </p>
                                     )

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, {useState, useEffect, useRef} from 'react';
 import Image from 'next/image';
-import {Grid, Button, Card, CardContent, CardMedia, Paper, Avatar, Typography, Slide, Fade, Box, Tooltip} from '@mui/material';
+import {Grid, Button, Card, CardContent, CardMedia, Paper, Avatar, CardHeader, Typography, Slide, Fade, Box, Tooltip} from '@mui/material';
 import { createURL, grabImage } from '../components/sanityClient';
 import SEO from '../components/seo';
 
@@ -112,12 +112,10 @@ const Homepage = ({avatar, homepage, contactPage, contacts, about}) =>{
         <Fade in timeout={750}>
           <Card sx={{ display: 'flex', margin: '1rem', backgroundColor: '#F5F5DC' }}>
               <Grid container>
-                  <Grid item xs = {12} sm ={6}>
+                  <Grid item xs = {12} md ={6}>
                       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                           <CardContent sx={{ flex: '1 0 auto' }}>
-                              <Typography component="div" variant="h1" className="header-text">
-                                  {aboutInfo.title}
-                              </Typography>
+                              <CardHeader title={aboutInfo.title} titleTypographyProps={{variant: 'h4', fontSize: '2.25vmax'}}/>
                               <Typography variant="subtitle1" color="text.primary" component="div">
                                   {aboutLines.map((line, id) => {
                                       return (
@@ -130,7 +128,7 @@ const Homepage = ({avatar, homepage, contactPage, contacts, about}) =>{
                           </CardContent>
                       </Box>
                   </Grid>
-                  <Grid item xs ={12} sm = {6} style={{display: 'flex', alignItems: 'center'}}>
+                  <Grid item xs ={12} md = {6} style={{display: 'flex', alignItems: 'center'}}>
                       <CardMedia
                           component="img"
                           sx={{ width: "100%" }}

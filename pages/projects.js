@@ -45,11 +45,8 @@ const projects = ({projects}) => {
   return (
     <div>
       <SEO pageTitle="Projects - Jerry Worthy's Software and ECE Portfolio" pageDescription="Explore a diverse range of projects that highlight my capabilities as a software engineer and electrical/computer engineer."/>
-      <Grid className = "search-container" container spacing = {3} justifyContent='center' style={{marginLeft: 'auto', marginRight: 'auto', marginTop: '0.2rem'}}>
-        <Grid item xs = {7} sm = {8} md = {8} lg ={10}>
-          <TextField fullWidth label="Search Projects" onChange={handleTextChange}/>
-        </Grid>
-        <Grid item xs = {5} sm ={4} md = {4} lg ={2}>
+      <Grid container spacing = {3} justifyContent='center' style={{marginLeft: 'auto', marginRight: 'auto', marginTop: '0.2rem', width: "50%"}}>
+        <Grid item xs = {12} sm ={4} md = {4} lg ={2}>
           <FormControl fullWidth>
             <InputLabel>Category</InputLabel>
             <Select
@@ -69,6 +66,9 @@ const projects = ({projects}) => {
               }
             </Select>
           </FormControl>
+        </Grid>
+        <Grid item xs = {12} sm = {8} md = {8} lg ={10}>
+          <TextField fullWidth label="Search Projects" onChange={handleTextChange}/>
         </Grid>
       </Grid>
       <Grid container spacing = {3} style = {{padding: '1rem', backgroundColor: '#e7e7e7'}} >
