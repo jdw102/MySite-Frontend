@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import { createURL, grabImage } from '../../components/SanityClient';
+import { createURL, grabImage } from '../../components/sanityClient';
 import { Fade, Card, CardContent, Grid, CardMedia, Typography, Box, ImageList, ImageListItem, CardHeader, CardActions, IconButton, Tooltip } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
