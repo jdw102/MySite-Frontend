@@ -1,6 +1,7 @@
 import React, {useContext} from 'react'
 import { createURL, grabImage } from '../../components/sanityClient';
-import { Fade, Card, CardContent, Grid, CardMedia, Typography, Box, ImageList, ImageListItem, CardHeader, CardActions, IconButton, Tooltip } from '@mui/material';
+import { Fade, Card, CardContent, Grid, CardMedia, Typography, Box,
+     CardHeader, CardActions, IconButton, Tooltip, Button } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -24,8 +25,8 @@ const project = ({project}) => {
     })
     project.videos && project.videos.map((vid, key) => {
         carouselItems.push(
-            <div key={key} style={{ objectFit: "contain", height: "90vh", maxWidth: "100%", backgroundColor:'#d1700f50' }}>
-                <iframe src={vid} height="100%"/>
+            <div key={key} style={{ objectFit:'fill' , height: "90vh", width: "100%"}}>
+                <iframe src={vid} height="100%" />
             </div>);
     })
   return (
@@ -55,11 +56,18 @@ const project = ({project}) => {
                                 })}
                             </Typography>
                         </CardContent>
+                        <CardActions style={{display: 'flex', justifyContent: 'center'}}>
+                            {project.link && 
+                                <Button  variant = "contained" style={{backgroundColor: '#d1700fc0'}} onClick={() => window.open(project.link)}>
+                                    Visit Project
+                                </Button>
+                                }
+                            </CardActions>
                     </Box>
                 </Grid>
                 <Grid item xs ={12} sm = {6} style={{display: 'flex', alignItems: 'center'}}>
                     <CardMedia>
-                        <Carousel autoPlay={true} infiniteLoop={true} width = "100%" showThumbs={false} >
+                        <Carousel  infiniteLoop={true} showThumbs={false}  >
                             {carouselItems.map((item) => {
                                 return (
                                     item

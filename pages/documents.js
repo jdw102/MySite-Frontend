@@ -4,7 +4,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { createURL, grabFile, grabImage } from '../components/sanityClient';
 import SEO from '../components/seo';
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const documents = await fetch(createURL("files"));
   return {
     props: {
