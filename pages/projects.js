@@ -3,12 +3,13 @@ import { createURL, grabImage } from '../components/sanityClient';
 import { Card, Grid, CardHeader, 
   CardMedia, CardContent, CardActions, 
   Button, Grow, Typography, Chip, TextField, Select,
-  FormControl, InputLabel, MenuItem
+  FormControl, InputLabel, MenuItem, IconButton, Tooltip
  } from '@mui/material';
 import Link from 'next/link';
 import SEO from '../components/seo';
+import LaunchIcon from '@mui/icons-material/Launch';
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const projects = await fetch(createURL("project"));
   return {
     props: {
@@ -80,6 +81,11 @@ const projects = ({projects}) => {
                   <Card style={{backgroundColor: '#F5F5DC'}}>
                     <CardHeader 
                     title={project.title}
+                    action={project.link && <IconButton onClick={() => window.open(project.link)}>
+                              <Tooltip title="Visit Project">
+                                <LaunchIcon />
+                              </Tooltip>
+                            </IconButton>}
                     />
                     <CardMedia
                     component="img"
