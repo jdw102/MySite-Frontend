@@ -8,6 +8,7 @@ import { Card, Grid, CardHeader,
 import Link from 'next/link';
 import SEO from '../components/seo';
 import LaunchIcon from '@mui/icons-material/Launch';
+import SearchIcon from '@mui/icons-material/Search';
 
 export async function getServerSideProps() {
   const projects = await fetch(createURL("project"));
@@ -46,39 +47,38 @@ const projects = ({projects}) => {
   return (
     <div>
       <SEO pageTitle="Projects - Jerry Worthy's Software and ECE Portfolio" pageDescription="Explore a diverse range of projects that highlight my capabilities as a software engineer and electrical/computer engineer."/>
-      <Grid container spacing = {3} justifyContent='center' style={{marginLeft: 'auto', marginRight: 'auto', marginTop: '0.2rem', width: "50%"}}>
+      <Grid container spacing = {4} justifyContent='center' style={{marginLeft: 'auto', marginRight: 'auto', marginTop: '0.2rem', width: "50%"}}>
         <Grid item xs = {12} sm ={4} md = {4} lg ={2}>
-          <FormControl fullWidth>
-            <InputLabel>Category</InputLabel>
-            <Select
-              value={category}
-              label="Category"
-              onChange={handleChange}
-            >
-              <MenuItem value={"All"}>All</MenuItem>
-              {
-                [...categories].map((cat, key) => {
-                  return (
-                    <MenuItem key={key} value = {cat}>
-                     {cat}
-                    </MenuItem>
-                  )
-                })
-              }
-            </Select>
-          </FormControl>
+          <select
+            value={category}
+            label="Category"
+            onChange={handleChange}
+            style={{height: '3rem', width: '100%', backgroundColor: "transparent", color: 'white', borderRadius: '1rem', fontSize: '1rem'}}
+          >
+            <option value={"All"} style={{height: '3rem', width: '100%', backgroundColor: "#565264", color: 'white', borderRadius: '1rem', fontSize: '1rem'}}>All</option>
+            {
+              [...categories].map((cat, key) => {
+                return (
+                  <option key={key} value = {cat} style={{height: '3rem', width: '100%', backgroundColor: "#565264", color: 'white', borderRadius: '1rem', fontSize: '1rem'}}>
+                    {cat}
+                  </option>
+                )
+              })
+            }
+          </select>
         </Grid>
         <Grid item xs = {12} sm = {8} md = {8} lg ={10}>
-          <TextField fullWidth label="Search Projects" onChange={handleTextChange}/>
+          <SearchIcon style={{position: "absolute", marginTop: '0.7rem', marginLeft: '0.4rem', color: 'white'}}/>
+          <input  id="projectSearch" className = "project-search-bar" onChange={handleTextChange} style={{height: '3rem', width: '100%', backgroundColor: "transparent", color: 'white', borderRadius: '1rem', fontSize: '1rem', paddingLeft: '2rem'}} placeholder='Search projects by title'/>
         </Grid>
       </Grid>
-      <Grid container spacing = {3} style = {{padding: '1rem', backgroundColor: '#e7e7e7'}} >
+      <Grid container spacing = {3} style = {{padding: '1rem', marginTop: '0.25rem'}} >
         {
           allProjects.map((project, index) => {
             return (
               <Grow key={index} in style={{transitionDelay: `${index * 100}ms`}}>
-                <Grid item xs = {12} sm = {6} md = {4}>
-                  <Card style={{backgroundColor: '#F5F5DC'}}>
+                <Grid item xs = {12} sm = {6} md = {3}>
+                  <Card style={{backgroundColor: '#e7e7e7'}}>
                     <CardHeader 
                     title={project.title}
                     action={project.link && <IconButton onClick={() => window.open(project.link)}>
@@ -106,7 +106,7 @@ const projects = ({projects}) => {
                     </CardContent>
                     <CardActions>
                       <Link href={`/project/${project._id}`}>
-                        <Button style={{color: '#d1700fc0'}}>
+                        <Button style={{color: '#CD5334ff'}}>
                           Learn More
                         </Button>
                       </Link>

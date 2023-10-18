@@ -5,7 +5,8 @@ html {
 body {
   padding: 0;
   margin: 0;
-  background-color: #e7e7e7;
+  /* background-color: #e7e7e7; */
+  background-color: #565264;
 }
 
 a {
@@ -45,10 +46,14 @@ button {
 
 .content-text {
   font-family: 'Roboto', sans-serif;
-  font-size: 1.5vmax;
+  font-size: 1.3vmax;
   white-space: pre-line;
   line-height: 150%;
   margin-top: 1rem
+}
+
+.font {
+  font-family: 'Roboto', sans-serif;
 }
 
 .menu-button {
@@ -70,4 +75,9 @@ button {
     visibility: hidden;
     position: absolute
   }
+}
+
+.project-search-bar::placeholder{
+  color: #ffffffa0;
+  margin-left: 1rem;
 }

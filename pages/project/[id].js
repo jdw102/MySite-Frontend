@@ -31,8 +31,8 @@ const project = ({project}) => {
     })
   return (
     <Fade in timeout={750}>
-        <Card sx={{ display: 'flex', margin: '1rem', backgroundColor: '#F5F5DC' }}>
-            <Grid container>
+        <Card sx={{ display: 'flex', margin: '3rem', backgroundColor: '#e7e7e7' }}>
+            <Grid container style = {{marginTop: '1rem'}}>
                 <Grid item xs = {12} sm ={6}>
                     <div style={{display: 'flex'}}>
                         <div style={{display: 'flex', alignItems: 'center', margin: '0.5rem'}}>
@@ -49,7 +49,7 @@ const project = ({project}) => {
                             <Typography variant="subtitle1" color="text.primary" >
                                 {project.description.split('\n').map((line, key) => {
                                     return (
-                                        <p style={{marginBottom: '1rem', fontSize: '1.5vmax'}} key={key}>
+                                        <p style={{marginBottom: '1rem', fontSize: '1vmax'}} key={key}>
                                            &nbsp; &nbsp; {line}
                                         </p>
                                     )
@@ -58,7 +58,7 @@ const project = ({project}) => {
                         </CardContent>
                         <CardActions style={{display: 'flex', justifyContent: 'center'}}>
                             {project.link && 
-                                <Button  variant = "contained" style={{backgroundColor: '#d1700fc0'}} onClick={() => window.open(project.link)}>
+                                <Button  variant = "contained" style={{backgroundColor: '#CD5334ff'}} onClick={() => window.open(project.link)}>
                                     Visit Project
                                 </Button>
                                 }

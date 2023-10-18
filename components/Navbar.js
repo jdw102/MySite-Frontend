@@ -43,8 +43,8 @@ const Navbar = () => {
     const currloc = useRouter().pathname;
     return (
         <Box sx = {{flexGrow: 1, }}>
-            <AppBar position = "relative" style = {{background: '#F5F5DC'}} >
-                <Grid container component = {Toolbar} justifyContent='space-between' alignItems='center'> 
+            <AppBar position = "relative" style = {{background: '#565264', boxShadow: 'none', borderBottom: '1px solid #e7e7e7'}} >
+                <Grid container component = {Toolbar} justifyContent='space-between' alignItems='center' style= {{marginTop: '0.5rem', marginBottom: '0.5rem' }}> 
                     <Grid className="menu-button" item xs ={1} sm ={1} md = {4} lg = {5} justifyContent = 'right' align = 'right'>
                         <IconButton onClick={handleClick}>
                             <MenuIcon style= {{color: '#2e201f'}}/>
@@ -56,17 +56,17 @@ const Navbar = () => {
                             size='large'
                             edge="start"
                         >
-                            <HomeIcon style= {{color: '#2e201f'}}/>
+                            <HomeIcon style= {{color: '#f5f3f2'}}/>
                         </IconButton>
                         </Link>
                     </Grid>
                     <Grid className = "navbar-items" item xs = {11} sm = {11} md = {8} lg = {5}>
                         <Grid container justifyContent = "flex-end" spacing = {2}>
                             {menuItems.map((x, key) => (
-                                <Grid key = {key} xs={3} sm ={3} item align = 'center' style={{display: 'flex', alignItems: 'center'}} >
+                                <Grid key = {key} xs={3} sm ={2} item align = 'center' style={{display: 'flex', alignItems: 'center'}} >
                                     <Link href={x.url} color="secondary">
                                         <Button key={x.title} style={{ borderRadius: "10px" }} >
-                                            <Typography textTransform='capitalize' variant='h6' color='#2e201f' sx={{ fontWeight: 550, fontSize: '1rem' }}>{x.title}</Typography>
+                                            <Typography textTransform='capitalize' variant='h6' color='#f5f3f2' sx={{ fontWeight: 550, fontSize: '1rem' }}>{x.title}</Typography>
                                         </Button>
                                     </Link>
                                 </Grid>

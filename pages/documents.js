@@ -17,10 +17,10 @@ const documents = ({documents}) => {
   const [data, setData] = useState(documents? grabFile(documents.result[0]): "");
   const [id, setId] = useState(0);
   return (
-    <div>
+    <div >
       <SEO pageTitle= "Work Documents - Jerry Worthy's Portfolio" pageDescription= "Browse through a collection of documents showcasing my professional journey."/>
       <Fade in timeout={750}>
-        <Card sx={{ display: 'flex', margin: '1rem', backgroundColor: '#F5F5DC', height: '100vh' }}>
+        <Card sx={{ display: 'flex', margin: '1rem', backgroundColor: '#e7e7e7', height: '100vh' }}>
             <Grid container>
                 <Grid item xs = {12} md ={4}>
                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -39,7 +39,7 @@ const documents = ({documents}) => {
                                   <ListItemButton onClick={() => 
                                     {setData(grabFile(doc))
                                     setId(key);
-                                    }} style={{backgroundColor: id === key? "#d1700f50": '#F5F5DC'}}>
+                                    }} style={{backgroundColor: id === key? "#56526450": '#e7e7e7'}}>
                                     <ListItem>
                                       <ListItemText>
                                         {doc.title}
