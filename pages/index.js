@@ -36,7 +36,7 @@ function useWindowSize() {
     return windowSize;
   }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const avatar = await fetch(createURL("avatar"));
   const homepage = await fetch(createURL("homepage"));
   const about = await fetch(createURL("about"));
